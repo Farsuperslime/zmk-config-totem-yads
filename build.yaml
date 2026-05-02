@@ -1,5 +1,5 @@
 include:
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_left
     cmake-args: >-
       -DCONFIG_ZMK_SPLIT=y
@@ -7,7 +7,7 @@ include:
       -DMIRYOKU_ALPHAS=COLEMAKDH
     artifact-name: totem-miryoku-dongle-left
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_right
     cmake-args: >-
       -DCONFIG_ZMK_SPLIT=y
@@ -15,7 +15,7 @@ include:
       -DMIRYOKU_ALPHAS=COLEMAKDH
     artifact-name: totem-miryoku-dongle-right
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_left
     cmake-args: >-
       -DCONFIG_ZMK_STUDIO=y
@@ -23,12 +23,12 @@ include:
     snippet: studio-rpc-usb-uart
     artifact-name: totem-miryoku-ble-left
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_right
     cmake-args: -DMIRYOKU_ALPHAS=COLEMAKDH
     artifact-name: totem-miryoku-ble-right
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_dongle dongle_screen
     cmake-args: >-
       -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
@@ -37,7 +37,7 @@ include:
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-miryoku-dongle-yads
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: totem_dongle
     cmake-args: >-
       -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
@@ -45,6 +45,6 @@ include:
     snippet: zmk-usb-logging
     artifact-name: totem-miryoku-dongle
 
-  - board: seeeduino_xiao_ble//zmk
+  - board:  xiao_ble//zmk
     shield: settings_reset
     artifact-name: totem-settings-reset
