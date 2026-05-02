@@ -1,2 +1,3 @@
-// Custom Miryoku config for Totem
-// cmake flags in build.yaml handle most customization
+// Copyright 2021 Manna Harbour
+// https://github.com/manna-harbour/miryoku
+
