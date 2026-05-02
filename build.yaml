@@ -1,30 +1,50 @@
 include:
   - board: seeeduino_xiao_ble
     shield: totem_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: totem-dongle-left
+    cmake-args: >-
+      -DCONFIG_ZMK_SPLIT=y
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+      -DMIRYOKU_ALPHAS=COLEMAKDH
+    artifact-name: totem-miryoku-dongle-left
+
   - board: seeeduino_xiao_ble
     shield: totem_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: totem-dongle-right
+    cmake-args: >-
+      -DCONFIG_ZMK_SPLIT=y
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+      -DMIRYOKU_ALPHAS=COLEMAKDH
+    artifact-name: totem-miryoku-dongle-right
+
   - board: seeeduino_xiao_ble
     shield: totem_left
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    cmake-args: >-
+      -DCONFIG_ZMK_STUDIO=y
+      -DMIRYOKU_ALPHAS=COLEMAKDH
     snippet: studio-rpc-usb-uart
-    artifact-name: totem-ble-left
+    artifact-name: totem-miryoku-ble-left
+
   - board: seeeduino_xiao_ble
     shield: totem_right
-    artifact-name: totem-ble-right
+    cmake-args: -DMIRYOKU_ALPHAS=COLEMAKDH
+    artifact-name: totem-miryoku-ble-right
+
   - board: seeeduino_xiao_ble
     shield: totem_dongle dongle_screen
-    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000 -DCONFIG_ZMK_STUDIO=y
+    cmake-args: >-
+      -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+      -DCONFIG_ZMK_STUDIO=y
+      -DMIRYOKU_ALPHAS=COLEMAKDH
     snippet: zmk-usb-logging studio-rpc-usb-uart
-    artifact-name: totem-dongle-yads
+    artifact-name: totem-miryoku-dongle-yads
+
   - board: seeeduino_xiao_ble
     shield: totem_dongle
-    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+    cmake-args: >-
+      -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+      -DMIRYOKU_ALPHAS=COLEMAKDH
     snippet: zmk-usb-logging
-    artifact-name: totem-dongle
+    artifact-name: totem-miryoku-dongle
+
   - board: seeeduino_xiao_ble
     shield: settings_reset
     artifact-name: totem-settings-reset

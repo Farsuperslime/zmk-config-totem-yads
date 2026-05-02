@@ -4,6 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: janpfischer
       url-base: https://github.com/janpfischer
+    - name: manna-harbour
+      url-base: https://github.com/manna-harbour
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -12,5 +14,8 @@ manifest:
     - name: zmk-dongle-screen
       remote: janpfischer
       revision: 0.1.2
+    - name: miryoku_zmk
+      remote: manna-harbour
+      revision: main
   self:
     path: config
