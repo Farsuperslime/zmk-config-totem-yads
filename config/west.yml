@@ -9,11 +9,11 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3.0
+      revision: main
       import: app/west.yml
     - name: zmk-dongle-screen
       remote: janpfischer
-      revision: 0.1.2
+      revision: upgrade-4.1
     - name: miryoku_zmk
       remote: manna-harbour
       revision: master
