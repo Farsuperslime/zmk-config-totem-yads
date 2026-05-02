@@ -16,6 +16,6 @@ manifest:
       revision: 0.1.2
     - name: miryoku_zmk
       remote: manna-harbour
-      revision: miryoku
+      revision: master
   self:
     path: config
