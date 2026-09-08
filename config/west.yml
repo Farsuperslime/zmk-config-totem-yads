@@ -9,7 +9,10 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Pinned to a main commit (Zephyr 4.1 + the mid-2026 fixes for split
+      # central sleep/wake lockups). No tagged ZMK release is on Zephyr 4.1
+      # yet; revisit when v0.4.0 ships.
+      revision: 641514a97db345f499dd50b0360e594270f008fe
       import: app/west.yml
     - name: zmk-dongle-screen
       remote: janpfischer
