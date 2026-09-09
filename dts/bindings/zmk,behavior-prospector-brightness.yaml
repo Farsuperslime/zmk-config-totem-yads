@@ -1,0 +1,18 @@
+description: Prospector display brightness behavior
+
+compatible: "zmk,behavior-prospector-brightness"
+
+include:
+  - name: behavior.yaml
+    property-allowlist: [label]
+
+"#binding-cells":
+  - param1
+
+properties:
+  step:
+    type: int
+    default: 10
+    description: |
+      Brightness adjustment per INC/DEC press (1–100).
+      The display brightness is clamped to 1–100.
