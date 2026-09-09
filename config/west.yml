@@ -18,9 +18,10 @@ manifest:
       # Fork adding CONFIG_PROSPECTOR_IDLE_TIMEOUT_S (screen-off after
       # inactivity), smooth fade-out on idle, and symmetric fade-in on wake.
       # Based on carrefinho's feat/new-status-screens branch (Zephyr 4.1 /
-      # ZMK-main-compatible). Pinned to the fade-in commit.
+      # ZMK-main-compatible). Branch tip currently a458823 (fade-out +
+      # fade-in + K_SEM_DEFINE fix).
       remote: Farsuperslime
-      revision: a458823e4a88ca6e85c6a6d3804c44a4f9b1d04d
+      revision: add-idle-timeout
     - name: miryoku_zmk
       remote: manna-harbour
       revision: master
