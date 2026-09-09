@@ -16,10 +16,11 @@ manifest:
       import: app/west.yml
     - name: prospector-zmk-module
       # Fork adding CONFIG_PROSPECTOR_IDLE_TIMEOUT_S (screen-off after
-      # inactivity), based on carrefinho's feat/new-status-screens branch
-      # (the Zephyr 4.1 / ZMK-main-compatible branch of the module).
+      # inactivity), smooth fade-out on idle, and symmetric fade-in on wake.
+      # Based on carrefinho's feat/new-status-screens branch (Zephyr 4.1 /
+      # ZMK-main-compatible). Pinned to the fade-in commit.
       remote: Farsuperslime
-      revision: add-idle-timeout
+      revision: 63aa30eeab457b79fbd95c2c71c016ed6f9d05a8
     - name: miryoku_zmk
       remote: manna-harbour
       revision: master
