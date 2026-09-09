@@ -29,13 +29,13 @@ include:
     artifact-name: totem-miryoku-ble-right
 
   - board:  xiao_ble//zmk
-    shield: totem_dongle dongle_screen
+    shield: totem_dongle prospector_adapter
     cmake-args: >-
       -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
       -DCONFIG_ZMK_STUDIO=y
       -DMIRYOKU_ALPHAS=COLEMAKDH
     snippet: zmk-usb-logging studio-rpc-usb-uart
-    artifact-name: totem-miryoku-dongle-yads
+    artifact-name: totem-miryoku-dongle-prospector
 
   - board:  xiao_ble//zmk
     shield: totem_dongle
