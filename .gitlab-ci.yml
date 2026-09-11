@@ -8,6 +8,10 @@
 #
 # Contract is unchanged: edit build.yaml, get one build job per entry, plus a
 # merged "firmware" artifact containing every .uf2/.bin.
+#
+# Where the firmware is: the downstream pipeline's merge job. The artifact this
+# pipeline produces (generated-pipeline) is only the job list the downstream
+# pipeline is built from, not firmware.
 
 stages:
   - generate
@@ -19,6 +23,7 @@ generate-pipeline:
   script:
     - python3 .gitlab/generate-pipeline.py --matrix build.yaml --config config --out generated-ci.yml
   artifacts:
+    name: generated-pipeline
     paths:
       - generated-ci.yml
     expire_in: 1 day
