@@ -1,0 +1,37 @@
+# GitLab CI port of .github/workflows/build.yml.
+#
+# On GitHub this repository only called the reusable workflow
+#   zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3.0
+# which reads build.yaml at run time and builds one firmware per entry.
+# GitLab cannot call GitHub reusable workflows, so the same matrix is resolved
+# at run time by .gitlab/generate-pipeline.py into a generated child pipeline.
+#
+# Contract is unchanged: edit build.yaml, get one build job per entry, plus a
+# merged "firmware" artifact containing every .uf2/.bin.
+#
+# Where the firmware is: the downstream pipeline's merge job. The artifact this
+# pipeline produces (generated-pipeline) is only the job list the downstream
+# pipeline is built from, not firmware.
+
+stages:
+  - generate
+  - build
+
+generate-pipeline:
+  stage: generate
+  image: zmkfirmware/zmk-build-arm:stable
+  script:
+    - python3 .gitlab/generate-pipeline.py --matrix build.yaml --config config --out generated-ci.yml
+  artifacts:
+    name: generated-pipeline
+    paths:
+      - generated-ci.yml
+    expire_in: 1 day
+
+build:
+  stage: build
+  trigger:
+    include:
+      - artifact: generated-ci.yml
+        job: generate-pipeline
+    strategy: depend
