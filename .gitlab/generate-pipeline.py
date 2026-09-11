@@ -150,9 +150,9 @@ def build_job(entry: dict, args, module_mode: bool) -> dict:
             f'mkdir -p "{west_root}/{args.config}"',
             f'cp -R "$CI_PROJECT_DIR/{args.config}"/. "{west_root}/{args.config}"/',
             f"west init -l {config_dir}",
+            f'cd "{west_root}"',
             "west update --fetch-opt=--filter=tree:0",
             "west zephyr-export",
-            f'cd "{west_root}"',
         ]
     else:
         config_dir = f'"$CI_PROJECT_DIR/{args.config}"'
