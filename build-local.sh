@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Local firmware build for this ZMK config -- no GitLab pipeline required.
+# Local firmware build for this ZMK config.
 #
 #   ./build-local.sh                     build every entry in build.yaml
 #   ./build-local.sh totem-miryoku-dongle-prospector
@@ -9,8 +9,8 @@
 #   ./build-local.sh --help
 #
 # Artefacts land in $ZMK_WORKSPACE/artifacts/ (both .uf2 and .bin are copied
-# when present). Mirrors what .gitlab/generate-pipeline.py does: same board,
-# shield, snippet and cmake-args per entry, same -DZMK_CONFIG / -DZMK_EXTRA_MODULES.
+# when present). Each build.yaml entry is built exactly as written: same board,
+# shield, snippet and cmake-args, same -DZMK_CONFIG / -DZMK_EXTRA_MODULES.
 #
 # This script lives in the repo, so run it from anywhere. Everything it needs
 # lives outside the repo and can be pointed elsewhere with these variables:
