@@ -1,18 +1,19 @@
+# Copyright (c) 2026 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
 description: Prospector display brightness behavior
 
 compatible: "zmk,behavior-prospector-brightness"
 
-include:
-  - name: behavior.yaml
-    property-allowlist: [label]
-
-"#binding-cells":
-  - param1
+# Provides "#binding-cells" (const 1), "display-name" and the deprecated
+# "label". ZMK no longer ships a bare "behavior.yaml" -- bindings include
+# one_param.yaml / two_param.yaml / zero_param.yaml instead.
+include: one_param.yaml
 
 properties:
   step:
     type: int
-    default: 10
+    default: 5
     description: |
-      Brightness adjustment per INC/DEC press (1–100).
-      The display brightness is clamped to 1–100.
+      Brightness adjustment per INC/DEC press (1-100).
+      The display brightness is clamped to 1-100.

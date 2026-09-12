@@ -16,6 +16,7 @@
     behaviors {
         pbl: prospector_brightness {
             compatible = "zmk,behavior-prospector-brightness";
+            display-name = "Prospector Brightness";
             #binding-cells = <1>;
             step = <5>;
         };
