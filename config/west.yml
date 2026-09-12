@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: Farsuperslime
-      url-base: https://github.com/Farsuperslime
+    - name: lcthrock
+      url-base: git@gitlab.com:lcthrock
     - name: manna-harbour
       url-base: https://github.com/manna-harbour
   projects:
@@ -18,9 +18,12 @@ manifest:
       # Fork adding CONFIG_PROSPECTOR_IDLE_TIMEOUT_S (screen-off after
       # inactivity), smooth fade-out on idle, and symmetric fade-in on wake.
       # Based on carrefinho's feat/new-status-screens branch (Zephyr 4.1 /
-      # ZMK-main-compatible). Branch tip currently a458823 (fade-out +
-      # fade-in + K_SEM_DEFINE fix).
-      remote: Farsuperslime
+      # ZMK-main-compatible). Branch tip currently 6148075 (export
+      # prospector_last_brightness for the keyboard brightness behavior).
+      # Mirrored from github.com/Farsuperslime/prospector-zmk-module; this
+      # GitLab fork is now the canonical source (private -- CI needs a
+      # deploy key/token to clone it).
+      remote: lcthrock
       revision: add-idle-timeout
     - name: miryoku_zmk
       remote: manna-harbour
