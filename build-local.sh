@@ -56,22 +56,6 @@ export ZEPHYR_SDK_INSTALL_DIR="$SDK"
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export PATH="$VENV/bin:$PATH"
 
-# --- authenticate to the private prospector-zmk-module fork ----------------
-# west.yml pins it as https://gitlab.com/lcthrock/prospector-zmk-module, which
-# is private. Rewrite that URL prefix for this process tree only, using git's
-# GIT_CONFIG_* environment interface, so your global ~/.gitconfig is never
-# modified: a deploy token if you export one, otherwise SSH.
-if [[ -n "${PROSPECTOR_ACCESS_TOKEN:-}" ]]; then
-    pbl_auth_url="https://${PROSPECTOR_GIT_USER:-oauth2}:${PROSPECTOR_ACCESS_TOKEN}@gitlab.com/lcthrock/"
-    pbl_auth_desc="the deploy token in PROSPECTOR_ACCESS_TOKEN"
-else
-    pbl_auth_url="git@gitlab.com:lcthrock/"
-    pbl_auth_desc="the SSH key of ${USER:-this account}"
-fi
-export GIT_CONFIG_COUNT=1
-export GIT_CONFIG_KEY_0="url.${pbl_auth_url}.insteadOf"
-export GIT_CONFIG_VALUE_0="https://gitlab.com/lcthrock/"
-
 # --- keep the workspace's copy of config/ in step with the repo ------------
 # config/ doubles as the west manifest repository, so it has to live inside
 # the workspace; copy it fresh each run so deletions are picked up too.
@@ -86,12 +70,6 @@ cp -R "$REPO/config/." "$WS/config/"
 
 if (( want_update )) || [[ "$new_hash" != "$old_hash" ]]; then
     info "west update (west.yml changed or --update)"
-    if ! git ls-remote https://gitlab.com/lcthrock/prospector-zmk-module.git >/dev/null 2>&1; then
-        die "cannot read the private prospector-zmk-module using $pbl_auth_desc.
-     Register an SSH key with GitLab, or export a deploy token first:
-       export PROSPECTOR_ACCESS_TOKEN=<token>
-       export PROSPECTOR_GIT_USER=<deploy-token-username>   # only if not 'oauth2'"
-    fi
     ( cd "$WS" && west update )
     printf '%s\n' "$new_hash" > "$WEST_HASH_FILE"
 else

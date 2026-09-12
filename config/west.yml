@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: lcthrock
-      url-base: https://gitlab.com/lcthrock
+    - name: Farsuperslime
+      url-base: https://github.com/Farsuperslime
     - name: manna-harbour
       url-base: https://github.com/manna-harbour
   projects:
@@ -20,10 +20,9 @@ manifest:
       # Based on carrefinho's feat/new-status-screens branch (Zephyr 4.1 /
       # ZMK-main-compatible). Branch tip currently 6148075 (export
       # prospector_last_brightness for the keyboard brightness behavior).
-      # Mirrored from github.com/Farsuperslime/prospector-zmk-module; this
-      # GitLab fork is now the canonical source (private -- CI clones it
-      # over HTTPS using a project access token; see .gitlab-ci.yml).
-      remote: lcthrock
+      # Hosted at github.com/Farsuperslime/prospector-zmk-module (public, so
+      # no credentials are needed to clone it in CI or locally).
+      remote: Farsuperslime
       revision: add-idle-timeout
     - name: miryoku_zmk
       remote: manna-harbour
