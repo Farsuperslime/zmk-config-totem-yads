@@ -3,7 +3,7 @@ manifest:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: lcthrock
-      url-base: git@gitlab.com:lcthrock
+      url-base: https://gitlab.com/lcthrock
     - name: manna-harbour
       url-base: https://github.com/manna-harbour
   projects:
@@ -21,8 +21,8 @@ manifest:
       # ZMK-main-compatible). Branch tip currently 6148075 (export
       # prospector_last_brightness for the keyboard brightness behavior).
       # Mirrored from github.com/Farsuperslime/prospector-zmk-module; this
-      # GitLab fork is now the canonical source (private -- CI needs a
-      # deploy key/token to clone it).
+      # GitLab fork is now the canonical source (private -- CI clones it
+      # over HTTPS using a project access token; see .gitlab-ci.yml).
       remote: lcthrock
       revision: add-idle-timeout
     - name: miryoku_zmk
