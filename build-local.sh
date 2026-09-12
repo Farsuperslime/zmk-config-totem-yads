@@ -15,14 +15,14 @@
 # This script lives in the repo, so run it from anywhere. Everything it needs
 # lives outside the repo and can be pointed elsewhere with these variables:
 #
-#   ZMK_WORKSPACE           west workspace        (default ~/zmk-build-totem)
+#   ZMK_WORKSPACE           west workspace        (default ~/Documents/totem-zmk/build)
 #   ZEPHYR_SDK_INSTALL_DIR  Zephyr SDK            (default ~/zephyr-sdk-0.16.9)
 #   ZMK_VENV                python venv           (default ~/.venvs/zmk)
 
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WS="${ZMK_WORKSPACE:-$HOME/zmk-build-totem}"
+WS="${ZMK_WORKSPACE:-$HOME/Documents/totem-zmk/build}"
 SDK="${ZEPHYR_SDK_INSTALL_DIR:-$HOME/zephyr-sdk-0.16.9}"
 VENV="${ZMK_VENV:-$HOME/.venvs/zmk}"
 OUT="$WS/artifacts"
