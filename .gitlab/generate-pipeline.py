@@ -22,7 +22,7 @@ import sys
 import yaml
 
 BUILD_IMAGE = "zmkfirmware/zmk-build-arm:stable"
-CACHE_KEY = "zmk-west-modules"
+CACHE_KEY = "zmk-west-modules-v2"
 CACHE_PATHS = (
     ".west-workspace/modules/",
     ".west-workspace/tools/",
