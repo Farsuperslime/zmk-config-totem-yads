@@ -13,7 +13,7 @@ include: one_param.yaml
 properties:
   step:
     type: int
-    default: 5
+    default: 10
     description: |
       Brightness adjustment per INC/DEC press (1-100).
       The display brightness is clamped to 1-100.
