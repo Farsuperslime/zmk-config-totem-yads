@@ -2,26 +2,21 @@
 // https://github.com/manna-harbour/miryoku
 
 // Prospector display brightness action codes.
-// Used in the keymap as &pbl PBL_INC etc. (dongle+prospector builds only).
-// Non-prospector builds see U_NA via the fallback macros below.
-// Bound on MEDIA (left-hand inner-index column for INC/DEC, right-hand
-// inner-index for TOG) and on FUN, immediately left of the right-hand
-// home-row shift (INC on the home row, DEC directly below it).
+// Used in the keymap as &pbl PBL_INC etc.
 #define PBL_TOG 0
 #define PBL_INC 1
 #define PBL_DEC 2
 
-#ifdef CONFIG_SHIELD_PROSPECTOR_ADAPTER
+// Bound unconditionally. The behavior node always exists (see totem.keymap) and
+// its driver compiles to a no-op on builds without the prospector display, so
+// no build-time conditional is needed -- and none is possible here, since
+// CONFIG_* symbols are not defined while the devicetree is preprocessed.
 #define U_PBL_TOG &pbl PBL_TOG
 #define U_PBL_INC &pbl PBL_INC
 #define U_PBL_DEC &pbl PBL_DEC
-#else
-// Halves and dongle-without-display builds: no behavior node, fall back to no-op.
-#define U_PBL_TOG U_NA
-#define U_PBL_INC U_NA
-#define U_PBL_DEC U_NA
-#endif
 
+// FUN layer: brightness up immediately left of the right-hand home-row shift,
+// brightness down directly below it.
 #define MIRYOKU_LAYER_FUN \
 &kp F12,           &kp F7,            &kp F8,            &kp F9,            &kp PSCRN,         U_NA,              &u_to_U_BASE,      &u_to_U_EXTRA,     &u_to_U_TAP,       U_BOOT,            \
 &kp F11,           &kp F4,            &kp F5,            &kp F6,            &kp SLCK,          U_PBL_INC,         &kp LSHFT,         &kp LCTRL,         &kp LALT,          &kp LGUI,          \

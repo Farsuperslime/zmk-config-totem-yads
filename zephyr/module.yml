@@ -1,3 +1,7 @@
 name: totem-config
 build:
   cmake: .
+  settings:
+    # Without this, dts/bindings/ is never added to DTS_ROOT and Zephyr
+    # cannot resolve compatible "zmk,behavior-prospector-brightness".
+    dts_root: .

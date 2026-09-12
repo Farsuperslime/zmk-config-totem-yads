@@ -8,8 +8,16 @@
  *   PBL_INC (1)  Increase brightness by `step`.
  *   PBL_DEC (2)  Decrease brightness by `step`.
  *
- * prospector_last_brightness (brightness.c) is kept in sync on every write so
- * the module's idle-timeout wake-restore lands on the keyboard-adjusted level.
+ * This driver is compiled into every build, because the behavior node it backs
+ * lives in the shared totem.keymap. The display backlight only exists on
+ * builds that include the prospector_adapter shield, so the hardware access is
+ * guarded on CONFIG_SHIELD_PROSPECTOR_ADAPTER (a Kconfig symbol, hence valid
+ * here even though it is not visible to the devicetree preprocessor). Without
+ * it the behavior accepts presses and does nothing.
+ *
+ * On prospector builds, prospector_last_brightness (brightness.c) is kept in
+ * sync on every write so the module's idle-timeout wake-restore lands on the
+ * keyboard-adjusted level.
  */
 
 #define DT_DRV_COMPAT zmk_behavior_prospector_brightness
@@ -18,12 +26,15 @@
 #include <zephyr/drivers/led.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/util.h>
 #include <drivers/behavior.h>
 #include <zmk/behavior.h>
 
 LOG_MODULE_REGISTER(behavior_prospector_brightness, CONFIG_ZMK_LOG_LEVEL);
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
+
+#if IS_ENABLED(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
 
 /* The pwm-leds device and backlight child index mirror what brightness.c uses,
  * so both share the same hardware path. */
@@ -32,6 +43,8 @@ static const struct device *const pwm_leds_dev = DEVICE_DT_GET_ONE(pwm_leds);
 
 /* Exported by brightness.c (non-static since the idle-restore fix). */
 extern uint8_t prospector_last_brightness;
+
+#endif /* CONFIG_SHIELD_PROSPECTOR_ADAPTER */
 
 /* Action codes -- must match the macros defined in custom_config.h / keymap. */
 #define PBL_ACTION_TOG 0
@@ -43,30 +56,38 @@ struct behavior_pbl_config {
 };
 
 struct behavior_pbl_data {
-    uint8_t brightness; /* 1–100, last level while screen was on */
+    uint8_t brightness; /* 1-100, last level while screen was on */
     bool screen_on;
 };
 
 static void pbl_apply(uint8_t level)
 {
+#if IS_ENABLED(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
     if (led_set_brightness(pwm_leds_dev, DISP_BL, level) != 0) {
         LOG_ERR("Failed to set display brightness to %d", level);
     }
+#else
+    ARG_UNUSED(level);
+#endif
 }
 
 /* Sync the module's idle-restore target so wake-from-idle lands on the
  * keyboard-adjusted level rather than the boot fixed brightness. */
 static void pbl_sync(uint8_t level)
 {
+#if IS_ENABLED(CONFIG_SHIELD_PROSPECTOR_ADAPTER)
     prospector_last_brightness = level;
+#endif
     pbl_apply(level);
 }
 
 static int pbl_init(const struct device *dev)
 {
     struct behavior_pbl_data *data = dev->data;
-    /* Seed from the compile-time fixed brightness (50 in ALS mode). */
-#if IS_ENABLED(CONFIG_PROSPECTOR_FIXED_BRIGHTNESS)
+    /* Seed from the compile-time fixed brightness. CONFIG_PROSPECTOR_FIXED_BRIGHTNESS
+     * is an int (range 1-100) that only exists without the ambient-light sensor,
+     * so test it with #ifdef, not IS_ENABLED(). */
+#ifdef CONFIG_PROSPECTOR_FIXED_BRIGHTNESS
     data->brightness = CONFIG_PROSPECTOR_FIXED_BRIGHTNESS;
 #else
     data->brightness = 50;
@@ -86,7 +107,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
     case PBL_ACTION_TOG:
         data->screen_on = !data->screen_on;
         pbl_apply(data->screen_on ? data->brightness : 0);
-        LOG_DBG("Display toggled %s", data->screen_on ? "on" : "off");
+        LOG_INF("Display toggled %s", data->screen_on ? "on" : "off");
         break;
 
     case PBL_ACTION_INC:
@@ -98,7 +119,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
             data->brightness = (next > 100) ? 100 : next;
         }
         pbl_sync(data->brightness);
-        LOG_DBG("Display brightness -> %d", data->brightness);
+        LOG_INF("Display brightness -> %d", data->brightness);
         break;
 
     case PBL_ACTION_DEC:
@@ -111,7 +132,11 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
             data->brightness -= cfg->step;
         }
         pbl_sync(data->brightness);
-        LOG_DBG("Display brightness -> %d", data->brightness);
+        LOG_INF("Display brightness -> %d", data->brightness);
+        break;
+
+    default:
+        LOG_WRN("Unknown brightness action %d", binding->param1);
         break;
     }
 

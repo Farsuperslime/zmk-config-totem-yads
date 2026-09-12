@@ -5,17 +5,19 @@
 #include "miryoku/mapping/38/totem.h"
 #include "miryoku/miryoku.dtsi"
 
-// Prospector display brightness behavior -- dongle+prospector_adapter builds only.
-// PBL_INC/DEC/TOG are defined in custom_config.h and expanded here via the DTS
-// preprocessor; non-prospector builds fall back to U_NA through that same file.
-#ifdef CONFIG_SHIELD_PROSPECTOR_ADAPTER
+// Prospector display brightness behavior.
+//
+// Defined unconditionally: devicetree files are preprocessed before Kconfig
+// runs, so a `#ifdef CONFIG_SHIELD_PROSPECTOR_ADAPTER` here would never be
+// true (CONFIG_* symbols are not visible to the DTS preprocessor). Instead the
+// behavior always exists and its driver is a no-op unless the build defines
+// CONFIG_SHIELD_PROSPECTOR_ADAPTER -- see src/behavior_prospector_brightness.c.
 / {
     behaviors {
         pbl: prospector_brightness {
             compatible = "zmk,behavior-prospector-brightness";
             #binding-cells = <1>;
-            step = <10>;
+            step = <5>;
         };
     };
 };
-#endif
