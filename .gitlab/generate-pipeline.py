@@ -153,7 +153,7 @@ def build_job(entry: dict, args, module_mode: bool) -> dict:
         west_root = "$CI_PROJECT_DIR/.west-workspace"
         config_dir = f'"{west_root}/{args.config}"'
         before_script = [
-            'git config --global url."https://oauth2:${PROSPECTOR_ACCESS_TOKEN}@gitlab.com/lcthrock/".insteadOf "https://gitlab.com/lcthrock/"',
+            'git config --global url."https://${PROSPECTOR_GIT_USER:-oauth2}:${PROSPECTOR_ACCESS_TOKEN}@gitlab.com/lcthrock/".insteadOf "https://gitlab.com/lcthrock/"',
             f'rm -rf "{west_root}/{args.config}"',
             f'mkdir -p "{west_root}/{args.config}"',
             f'cp -R "$CI_PROJECT_DIR/{args.config}"/. "{west_root}/{args.config}"/',
@@ -165,7 +165,7 @@ def build_job(entry: dict, args, module_mode: bool) -> dict:
     else:
         config_dir = f'"$CI_PROJECT_DIR/{args.config}"'
         before_script = [
-            'git config --global url."https://oauth2:${PROSPECTOR_ACCESS_TOKEN}@gitlab.com/lcthrock/".insteadOf "https://gitlab.com/lcthrock/"',
+            'git config --global url."https://${PROSPECTOR_GIT_USER:-oauth2}:${PROSPECTOR_ACCESS_TOKEN}@gitlab.com/lcthrock/".insteadOf "https://gitlab.com/lcthrock/"',
             f"west init -l {config_dir}",
             "west update --fetch-opt=--filter=tree:0",
             "west zephyr-export",
