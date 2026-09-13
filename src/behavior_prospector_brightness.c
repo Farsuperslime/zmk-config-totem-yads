@@ -101,19 +101,34 @@ static void pbl_sync(uint8_t level)
  * the caller knows whether auto-repeat is worth arming. */
 static bool pbl_step(struct behavior_pbl_data *data, bool up)
 {
+    uint8_t before;
+
     if (!data->screen_on) {
         if (!up) {
             return false; /* DEC while toggled off: no-op, as before */
         }
         /* Pressing INC while off wakes the display at the stored level. */
         data->screen_on = true;
-    } else if (up) {
+        before = data->brightness;
+        pbl_sync(data->brightness);
+        LOG_DBG("Display woken, brightness -> %d", data->brightness);
+        return true;
+    }
+
+    before = data->brightness;
+    if (up) {
         uint8_t next = data->brightness + data->step;
         data->brightness = (next > 100) ? 100 : next;
     } else if (data->brightness <= data->step) {
         data->brightness = 1;
     } else {
         data->brightness -= data->step;
+    }
+
+    if (data->brightness == before) {
+        /* Clamped at the limit: nothing changed, so holding the key is not
+         * worth repeating -- stop the caller from rescheduling forever. */
+        return false;
     }
 
     pbl_sync(data->brightness);

@@ -1,6 +1,13 @@
 // Copyright 2021 Manna Harbour
 // https://github.com/manna-harbour/miryoku
 
+// Alternative layout option. Note: `-DMIRYOKU_ALPHAS=COLEMAKDH` passed as a
+// CMake argument is dead here -- nothing forwards it to the preprocessor, and
+// it defines the wrong token anyway. Miryoku consumes #define
+// MIRYOKU_ALPHAS_COLEMAKDH. COLEMAKDH is also the miryoku fallback, so the
+// firmware built correctly by luck; make it explicit.
+#define MIRYOKU_ALPHAS_COLEMAKDH
+
 // Prospector display brightness action codes.
 // Used in the keymap as &pbl PBL_INC etc.
 #define PBL_TOG 0
